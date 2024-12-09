@@ -1,0 +1,7 @@
+flask                
+numpy                
+pandas               
+torch                
+open-clip-torch      
+scikit-learn         
+pillow               

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search Application</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <h1 class="page-title">Image Search Application</h1>
+    <form id="search-form" method="POST" enctype="multipart/form-data">
+        <label for="image-query">Image Query:</label>
+        <input type="file" id="image-query" name="image_query">
+
+        <label for="text-query">Text Query:</label>
+        <input type="text" id="text-query" name="text_query" placeholder="Enter text query">
+
+        <label for="hybrid-weight">Hybrid Query Weight (λ):</label>
+        <input type="number" id="hybrid-weight" name="hybrid_weight" step="0.1" min="0" max="1" value="0.5">
+
+        <label for="query-type">Select Query Type:</label>
+        <select id="query-type" name="query_type">
+            <option value="text">Text Query</option>
+            <option value="image">Image Query</option>
+            <option value="hybrid">Hybrid Query</option>
+        </select>
+
+        <label for="use-pca">Use PCA:</label>
+        <input type="checkbox" id="use-pca" name="use_pca">
+
+        <button type="submit" class="submit-button">Search</button>
+    </form>
+
+    <!-- Display error message if present -->
+    {% if error_message %}
+    <div class="error-message">{{ error_message }}</div>
+    {% endif %}
+
+    <!-- Display search results -->
+    {% if results %}
+    <div class="results">
+        <h2>Top Search Results</h2>
+        {% for fname, score in results %}
+        <div>
+            <img src="/coco_images_resized/{{ fname }}" alt="Result Image">
+            <p>Similarity: {{ "%.3f" | format(score) }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+
+</html>
